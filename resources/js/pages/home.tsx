@@ -8,7 +8,7 @@ import { Passenger } from "@/types/passenger";
 import { useState } from "react";
 
 type DashboardProps = {
-    travel?: Travel;
+    travel?: Travel[];
     passengers?: Passenger[];
 };
 
@@ -86,7 +86,7 @@ export default function Home({ totalBooking, travel, passengers }) {
                         <PassengerSection initialPassengers={passengers} />
                     </Tabs.Panel>
                     <Tabs.Panel id="service">
-                        <TravelSection travelInit={travel} />
+                        <TravelSection initialTravel={travel} />
                     </Tabs.Panel>
                 </Tabs>
             </div>

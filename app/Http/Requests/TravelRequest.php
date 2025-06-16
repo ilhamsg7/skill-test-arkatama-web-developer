@@ -10,7 +10,7 @@ class TravelRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'departure_date' => 'required|date|after_or_equal:today',
+            'departure_date' => 'required|date',
             'departure_time' => 'required|date_format:H:i',
             'quota' => 'required|integer|min:0|max:1000',
         ];

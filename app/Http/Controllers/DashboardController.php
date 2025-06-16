@@ -34,9 +34,17 @@ class DashboardController extends Controller
             withPaginate: false,
             relation: ['travel']
         );
+
+        $travel = $this->service->all(
+            allowedFilters: ['id', 'name'],
+            allowedSorts: $allowedSorts,
+            withPaginate: false,
+            relation: []
+        );
         return Inertia::render('home', [
             'totalBooking' => Travel::all()->count(),
-            'passengers'   => $passengers
+            'passengers'   => $passengers,
+            'travel' => $travel
         ]);
     }
 }

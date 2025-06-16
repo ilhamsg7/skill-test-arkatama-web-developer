@@ -26,8 +26,6 @@ export const PassengerSection = ({
     const [passengers, setPassengers] = useState<any>([]);
     const [showModal, setShowModal] = useState(false);
 
-    console.log(initialPassengers)
-
     const { data, setData, post, processing, errors } =
         useForm<PassengerFormData>({
             passenger_input: "",
@@ -39,8 +37,7 @@ export const PassengerSection = ({
         e.preventDefault();
         post(route("dashboard.passenger.store"), {
             onSuccess: () => {
-                setShowModal(false);
-                router.reload({ preserveScroll: true });
+                window.location.reload();
             },
         });
     };
