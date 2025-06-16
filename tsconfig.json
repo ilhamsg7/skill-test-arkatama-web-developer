@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "skipDefaultLibCheck": true,
+    "isolatedModules": true,
+    "target": "ESNext",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "strict": false, // Disable strict mode
+    "noImplicitAny": false, // Allow implicit `any` types
+    "skipLibCheck": true, // Skip type checking for node_modules
+    "paths": {
+      "@/*": ["./resources/js/*"],
+      "components/*": ["./resources/js/components/*"],
+      "layouts": ["./resources/js/layouts/index.ts"],
+      "ziggy-js": ["./vendor/tightenco/ziggy"],
+      "ui": ["./resources/js/components/ui/index.ts"]
+    }
+  },
+  "include": ["resources/js/**/*.ts", "resources/js/**/*.tsx", "resources/js/**/*.d.ts"],
+  "exclude": ["node_modules", "public"]
+}
