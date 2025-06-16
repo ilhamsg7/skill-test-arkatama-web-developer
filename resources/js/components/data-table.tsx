@@ -101,7 +101,7 @@ export const DataTable = <T extends Record<string, any>>({
                     onSelectionChange={onSelectionChange}
                     selectionMode={selectionMode}
                     className="min-w-full"
-                    
+
                 >
                     <Table.Header>
                         {columns.map(column => (

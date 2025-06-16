@@ -18,3 +18,16 @@ export const fetchTravel = async (search: any): Promise<SelectOption[]> => {
   }));
 };
 
+export const fetchGender= async (search: any): Promise<SelectOption[]> => {
+  return [
+    {
+      value: "L",
+      label: "Laki-laki"
+    },
+    {
+      value: "P",
+      label: "Perempuan"
+    }
+  ];
+};
+

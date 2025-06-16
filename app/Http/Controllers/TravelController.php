@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Contract\PassengerContract;
+use App\Contract\TravelContract;
 use App\Http\Requests\TravelRequest;
 use App\Utils\WebResponse;
-use Illuminate\Http\Request;
-use Spatie\QueryBuilder\AllowedSort;
 
 class TravelController extends Controller
 {
-    protected PassengerContract $service;
+    protected TravelContract $service;
 
-    public function __construct(PassengerContract $service)
+    public function __construct(TravelContract $service)
     {
         $this->service = $service;
     }
@@ -20,10 +18,11 @@ class TravelController extends Controller
     {
         $allowedSorts = [
             'id',
+            'name'
         ];
 
         $data = $this->service->all(
-            allowedFilters: ['id'],
+            allowedFilters: ['id', 'name'],
             allowedSorts: $allowedSorts,
             withPaginate: true,
             relation: [],
@@ -37,13 +36,13 @@ class TravelController extends Controller
     {
         $payload = $request->validated();
         $data = $this->service->create($payload);
-        return WebResponse::response($data, 'dashboard.index');
+        return WebResponse::response($data, 'Created Data Success', 'dashboard.index');
     }
 
     public function update(TravelRequest $request, $id)
     {
         $payload = $request->validated();
         $data = $this->service->update($id, $payload);
-        return WebResponse::response($data, 'dashboard.index');
+        return WebResponse::response($data, 'Updated Data Success','dashboard.index');
     }
 }

@@ -228,7 +228,7 @@ export const NextTable = <T extends any>({
                                   Sort By DESC
                                 </Button>
                                 {/* {header.column.getCanSort() && (
-                                  
+
                                 )} */}
                               </Popover.Body>
                             </Popover.Content>

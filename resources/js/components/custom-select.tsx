@@ -1,6 +1,6 @@
-import AsyncSelect from 'react-select/async';
+import AsyncSelect from "react-select/async";
 import { Label } from "./ui";
-import { twMerge } from 'tailwind-merge';
+import { twMerge } from "tailwind-merge";
 
 type CustomSelectProps = {
     label: string;
@@ -12,7 +12,7 @@ type CustomSelectProps = {
     loadOptions: (params: any) => Promise<any>;
     className?: string;
     isRequired?: boolean;
-    menuPlacement?: 'auto' | 'bottom' | 'top';
+    menuPlacement?: "auto" | "bottom" | "top";
     isReadOnly?: boolean;
     [key: string]: any;
 };

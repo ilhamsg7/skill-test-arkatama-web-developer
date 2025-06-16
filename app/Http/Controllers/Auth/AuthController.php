@@ -22,7 +22,7 @@ class AuthController extends Controller
     public function login()
     {
         if (Auth::guard()->check()) {
-            return "Welcome";
+            return redirect(route('dashboard.index'));
         } else {
             return Inertia::render('auth/login');
         }

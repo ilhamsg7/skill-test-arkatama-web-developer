@@ -1,10 +1,22 @@
-import { Card } from "@/components/ui";
+import { Card, Tabs } from "@/components/ui";
 import { AppLayout } from "@/layouts/app-layout";
 import { number_format, today_date_format } from "@/utils/format";
+import { PassengerSection } from "./dashboard/passenger-section";
+import { TravelSection } from "./dashboard/travel-section";
+import { Travel } from "@/types/travel";
+import { Passenger } from "@/types/passenger";
+import { useState } from "react";
 
-export default function Home({}) {
+type DashboardProps = {
+    travel?: Travel;
+    passengers?: Passenger[];
+};
+
+export default function Home({ totalBooking, travel, passengers }) {
+    const [selectedTab, setSelectedTab] = useState("booking");
+
     return (
-        <>
+        <div>
             <div className="flex justify-between">
                 <div>
                     <h1 className="text-3xl font-semibold">Dashboard</h1>
@@ -21,7 +33,9 @@ export default function Home({}) {
                             </Card.Title>
                         </Card.Header>
                         <Card.Content>
-                            <span className="text-4xl font-semibold">500</span>
+                            <span className="text-4xl font-semibold">
+                                {totalBooking}
+                            </span>
                         </Card.Content>
                     </Card>
                     <Card className="col-span-3">
@@ -58,7 +72,25 @@ export default function Home({}) {
                     </Card>
                 </div>
             </div>
-        </>
+
+            <div className="mt-8">
+                <Tabs
+                    selectedKey={selectedTab}
+                    onSelectionChange={(key) => setSelectedTab(String(key))}
+                >
+                    <Tabs.List>
+                        <Tabs.Tab id="booking">Bookings</Tabs.Tab>
+                        <Tabs.Tab id="service">My Service</Tabs.Tab>
+                    </Tabs.List>
+                    <Tabs.Panel id="booking">
+                        <PassengerSection initialPassengers={passengers} />
+                    </Tabs.Panel>
+                    <Tabs.Panel id="service">
+                        <TravelSection travelInit={travel} />
+                    </Tabs.Panel>
+                </Tabs>
+            </div>
+        </div>
     );
 }
 

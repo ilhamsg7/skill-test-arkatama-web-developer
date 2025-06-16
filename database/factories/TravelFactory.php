@@ -17,7 +17,10 @@ class TravelFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->unique()->company(),
+            'departure_date' => $this->faker->dateTimeBetween("-2 weeks", "now"),
+            'departure_time' => $this->faker->time(),
+            'quota' => $this->faker->numberBetween(20, 100)
         ];
     }
 }

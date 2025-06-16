@@ -7,7 +7,7 @@ Route::group(
     [
         'prefix' => 'dashboard',
         'as' => 'dashboard.',
-        //'middleware' => ['user-auth'],
+        'middleware' => ['user-auth'],
     ],
     function () {
         Route::get('', [DashboardController::class, 'index'])->name('index');
