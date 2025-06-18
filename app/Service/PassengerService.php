@@ -5,7 +5,9 @@ namespace App\Service;
 use App\Contract\PassengerContract;
 use App\Models\Passenger;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class PassengerService extends BaseService implements PassengerContract
@@ -25,17 +27,24 @@ class PassengerService extends BaseService implements PassengerContract
 
     public function create($payload)
     {
-        $parsedData = $this->parsePassengerInput($payload['passenger_input']);
-        $bookingCode = $this->generateBookingCode($payload['travel_id']);
-
-        return $this->model->create([
-            'name' => strtoupper($parsedData['name']),
-            'age' => $parsedData['age'],
-            'city' => strtoupper($parsedData['city']),
-            'birth_year' => $parsedData['birth_year'],
-            'booking_code' => $bookingCode,
-            'travel_id' => $payload['travel_id']
-        ]);
+        try {
+            $parsedData = $this->parsePassengerInput($payload['passenger_input']);
+            $bookingCode = $this->generateBookingCode($payload['travel_id']);
+            DB::beginTransaction();
+            $this->model->create([
+                'name' => strtoupper($parsedData['name']),
+                'age' => $parsedData['age'],
+                'city' => strtoupper($parsedData['city']),
+                'birth_year' => $parsedData['birth_year'],
+                'booking_code' => $bookingCode,
+                'travel_id' => $payload['travel_id']
+            ]);
+            DB::commit();
+            return true;
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return $exception;
+        }
     }
 
     private function parsePassengerInput(string $input): array
