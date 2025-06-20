@@ -1,26 +1,61 @@
 <?php
 
 namespace App\Utils;
+
 use Exception;
+use Inertia\Inertia;
 
 class WebResponse
 {
-    public static function base($message = '', $status = 200, $redirectRoute = null, $routeParam = null)
-    {
-        if ($status != 200) $message = sprintf('%s. %s', $status, $message);
-        if ($redirectRoute != null) return redirect()->route($redirectRoute, $routeParam)->with('message', $message)->setStatusCode($status);
-
-        if ($status != 200) return redirect()->back()->withInput()->with('message', $message)->with('errorNotification', $message)->setStatusCode($status);
-
-        return redirect()->back()->with('message', $message)->setStatusCode($status);
-    }
-
-    public static function response($result, $messageSuccess = '', $redirectRoute = null, $routeParam = null)
+    public static function response($result, $redirect = null)
     {
         if ($result instanceof Exception) {
-            return WebResponse::base($result->getMessage(), 400);
+            return back()->withErrors(['errors' => $result->getMessage()]);
+        }
+
+        if (is_null($redirect)) {
+            return redirect()->back();
+        }
+
+        if (is_array($redirect)) {
+            [$routeName, $params] = $redirect;
+            return Inertia::location(route($routeName, $params));
+        }
+
+        return Inertia::location(route($redirect));
+    }
+
+
+    public static function inertia($result, $redirectRoute, $param = null)
+    {
+        if ($result instanceof Exception) {
+            return back()->withErrors('errors', $result->getMessage());
         } else {
-            return WebResponse::base(ucwords($messageSuccess), 200, $redirectRoute, $routeParam);
+            return Inertia::location(route($redirectRoute, $param));
+        }
+    }
+
+    public static function inertiaRender($result, $render, $param = [])
+    {
+        if ($result instanceof Exception) {
+            return back()->withErrors('errors', $result->getMessage());
+        } else {
+            return Inertia::render($render, $param ?? $result);
+        }
+    }
+
+    public static function json($result, $message = 'Success', $status = 200)
+    {
+        if ($result instanceof Exception) {
+            return response()->json([
+                "message" => $result->getMessage(),
+                "data" => $result,
+            ], 400);
+        } else {
+            return response()->json([
+                "message" => $message,
+                "data" => $result,
+            ], $status);
         }
     }
 }

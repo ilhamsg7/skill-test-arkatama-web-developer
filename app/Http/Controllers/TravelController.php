@@ -36,13 +36,13 @@ class TravelController extends Controller
     {
         $payload = $request->validated();
         $data = $this->service->create($payload);
-        return WebResponse::response($data, 'Created Data Success', 'dashboard.index');
+        return WebResponse::response($data, 'dashboard.index');
     }
 
     public function update(TravelRequest $request, $id)
     {
         $payload = $request->validated();
         $data = $this->service->update($id, $payload);
-        return WebResponse::response($data, 'Updated Data Success','dashboard.index');
+        return WebResponse::response($data, 'dashboard.index');
     }
 }

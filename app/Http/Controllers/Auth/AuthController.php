@@ -32,13 +32,12 @@ class AuthController extends Controller
     {
         $payload = $request->validated();
         $result = $this->service->login($payload);
-
-        return WebResponse::response($result, 'login successfully', 'dashboard.index');
+        return WebResponse::response($result, 'dashboard.index');
     }
 
     public function logout()
     {
         $result = $this->service->logout();
-        return WebResponse::response($result, 'logout successfully', 'auth.login');
+        return WebResponse::response($result, 'auth.login');
     }
 }
